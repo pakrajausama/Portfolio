@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS Interactive Mapping</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">GIS with Raja Usama</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mapping.html">Mapping</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="webgis.html">WebGIS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="3d-modeling.html">3D Modeling</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="hero bg-primary text-white py-5">
+        <div class="container text-center">
+            <h1>WebGIS Interactive Mapping</h1>
+            <p>Explore my collection of dynamic, interactive web maps built with HTML, CSS, and JavaScript.</p>
+        </div>
+    </header>
+
+    <!-- Web Maps Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">My WebGIS Capabilities</h2>
+
+            <!-- Web Map 1 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">A Interactive Choropleth map</h5>
+                            <iframe src="webmap1\webmap1.html" class="embed-responsive-item" frameborder="0" style="width:100%; height:400px;"></iframe>
+                            <p class="mt-3">This map visualizes Freight Trucking emissions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Map 2 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">A heat map </h5>
+                            <iframe src="webmap2\heatmap.html" class="embed-responsive-item" frameborder="0" style="width:100%; height:400px;"></iframe>
+                            <p class="mt-3">An interactive WebGIS heat map using Leaflet.JS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Map 3 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">3d interactive Data Visualization</h5>
+                            <iframe src="cesiummap\cesium.html" class="embed-responsive-item" frameborder="0" style="width:100%; height:400px;"></iframe>
+                            <p class="mt-3">This map Showing my University made by using Cesium.JS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Map 4 -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Interactive clusters of Points</h5>
+                            <iframe src="WEBMAP4\WEB4.html" class="embed-responsive-item" frameborder="0" style="width:100%; height:400px;"></iframe>
+                            <p class="mt-3">Point cluster maps from leaflet.js</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p style="color: antiquewhite;">&copy; 2024 GIS with Raja Usama</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

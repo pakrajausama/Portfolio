@@ -1,0 +1,21 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+
+#map{
+    height: 500px;
+    width: 100%;
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px 1px gray;
+}
+/* Custom layer control background color */
+
+/* Change text color */
+.leaflet-control-layers label {
+    color: #ecdcdc; /* Change to white text */
+    background-color: rgba(0, 0, 0, 0.8); /* Change background color */
+    border: 2px solid #ccc; /* Optional border */
+    border-radius: 1px; /* Optional rounded corners */
+    padding: 5px; /* Add padding */
+}
