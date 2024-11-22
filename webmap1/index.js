@@ -1,4 +1,4 @@
-let map = L.map('map');
+let map = L.map('map',{fullscreenControl: true,});
 map.setView([30,70],5);
 let osmLayer = L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=x13uWPynShOcbm8f2l2Q',{
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
