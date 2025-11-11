@@ -1,13 +1,8 @@
 let map = L.map('map', { attributionControl: false }).setView([30, 70], 5);
 
 // Add base layers
-let osm = L.tileLayer('https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}.jpg?key=x13uWPynShOcbm8f2l2Q', {
-    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-}).addTo(map);
-
-let satellite = L.tileLayer('https://api.maptiler.com/maps/satellite/256/{z}/{x}/{y}.jpg?key=x13uWPynShOcbm8f2l2Q', {
-    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-});
+const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 22 });
+const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{ maxZoom: 19 });
 
 let baselayers = {
     'OSM': osm,

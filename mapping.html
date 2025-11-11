@@ -3,14 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapping and Data Visualization</title>
+    <title>Mapping & Data Visualization | Raja Muhammad Usama</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5f;
+            --secondary: #2c5aa0;
+            --accent: #4a90e2;
+            --light: #f0f7ff;
+            --dark: #0d1f36;
+            --text: #333;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background-color: #f8fafc;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            right: 10px;
+            height: 2px;
+            background-color: white;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 150px 0 100px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,197.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: bottom;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .project-section {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .project-section:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        .project-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .map-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            background: white;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .map-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .map-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+        
+        .card-img-top {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .map-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 58, 95, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .map-card:hover .card-overlay {
+            opacity: 1;
+        }
+        
+        .view-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .card-text {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(74, 144, 226, 0.4);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            padding: 30px 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Section transition effects */
+        .project-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .project-section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 0 80px;
+            }
+            
+            .project-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
 </head>
 <body>
-          <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
+        <div class="container">
             <a class="navbar-brand" href="index.html">GIS with Raja Usama</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -19,159 +338,350 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="mapping.html">Mapping</a></li>
-                    <li class="nav-item"><a class="nav-link " href="webgis.html">WebGIS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="webgis.html">WebGIS</a></li>
                     <li class="nav-item"><a class="nav-link" href="3d-modeling.html">3D Modeling</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Video.html">Video Editing</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-5 bg-light">
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <h1 data-aos="fade-up">Mapping & Data Visualization</h1>
+            <p class="lead mt-3" data-aos="fade-up" data-aos-delay="200">
+                Professional GIS mapping solutions and data visualizations that transform complex spatial data into actionable insights.
+            </p>
+        </div>
+    </header>
+
+    <!-- Project 1: Data Visualization for PhD Research -->
+    <section class="project-section" id="phd-research">
         <div class="container">
+            <div class="project-header" data-aos="fade-up">
+                <h2 class="section-title">Data Visualization for PhD Research</h2>
+                <p class="lead">Tsinghua University, China - Freight Emissions Analysis</p>
+            </div>
             <div class="row">
-                <h4 class="text-center">Data Visualization for Phd. research of Tsinghua University, China</h4>
                 <!-- Balochistan -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <img src="maps\Balochistan dist1.png" class="card-img-top" alt="Map will show after publication">
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/Balochistan dist.png" class="card-img-top" alt="Heatmap of freight emissions in Balochistan">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">Heatmap of freight emmissions</h5>
-                            <p class="card-text">This map has been made only using csv data</p>
-                            <a href="maps\Balochistan dist1.png" class="btn btn-primary" target="_blank">View Map</a>
+                            <h5 class="card-title">Heatmap of Freight Emissions</h5>
+                            <p class="card-text">This visualization represents freight emissions data across Balochistan, created exclusively from CSV data sources.</p>
+                            <a href="maps/Balochistan dist.png" class="btn btn-primary" target="_blank">View Map</a>
                         </div>
                     </div>
                 </div>
                 <!-- Punjab -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <img src="maps\Punjab1.png" class="card-img-top" alt="Map Example">
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/Punjab.png" class="card-img-top" alt="Bar-chart map of freight emissions in Punjab">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">Bar-Chart map</h5>
-                            <p class="card-text">Freight Trucks emmission in Punjab Division</p>
-                            <a href="maps\Punjab1.png" class="btn btn-primary" target="_blank">View Map</a>
+                            <h5 class="card-title">Bar-Chart Map of Emissions</h5>
+                            <p class="card-text">Visual representation of freight truck emissions across divisions in Punjab using bar-chart mapping techniques.</p>
+                            <a href="maps/Punjab.png" class="btn btn-primary" target="_blank">View Map</a>
                         </div>
                     </div>
                 </div>
-            
-            </div>
-        </div>
-        <!-- 2nd work -->
-         <!-- Portfolio Section -->
-          <br>
-        <div class="container">
-            <div class="row">
-                <h4 class="text-center">Climate change affect on drought pattern in AEZ's of Pakistan</h4>
-                <!-- preci -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="maps\preci1.png" class="card-img-top" alt="Map will show after publication">
-                        <div class="card-body">
-                            <h5 class="card-title">Precipitation Change</h5>
-                            <p class="card-text">Data Source is from GEE ERA5</p>
-                            <a href="maps\preci1.png" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- pci -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="maps\pci1.jpg" class="card-img-top" alt="Map Example">
-                        <div class="card-body">
-                            <h5 class="card-title">Precipitation Condition Index</h5>
-                            <p class="card-text">Drought trend due to Precipitation variable</p>
-                            <a href="maps\pci1.jpg" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 3rd  -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="maps\Peidmount Plain Spi1.png" class="card-img-top" alt="Map Example">
-                        <div class="card-body">
-                            <h5 class="card-title">Standerized Precipitation Index</h5>
-                            <p class="card-text">This indice is best for Drought assessment</p>
-                            <a href="maps\Peidmount Plain Spi1.png" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- DGK -->
-        <br>
-        <div class="container">
-            <div class="row">
-                <h4 class="text-center">Vegetation Growth Monitoring in DJ khan arid region in Pakistan</h4>
-                <!-- sat image -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="maps1\sat.png" class="card-img-top" alt="Map Example">
-                        <div class="card-body">
-                            <h5 class="card-title">False Color Comb-View</h5>
-                            <p class="card-text">Data Source Sentinel-2</p>
-                            <a href="maps1\sat.png" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- veg area -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="maps1\area map.png" class="card-img-top" alt="Map Example">
-                        <div class="card-body">
-                            <h5 class="card-title">Vegetation Threshold masking</h5>
-                            <p class="card-text">Vectorization of data for area Cal.</p>
-                            <a href="maps1\area map.png" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 3rd  -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="maps1\roi.png" class="card-img-top" alt="Map Example">
-                        <div class="card-body">
-                            <h5 class="card-title">Study Area Map</h5>
-                            <p class="card-text">4 different areas under Study</p>
-                            <a href="maps1\roi.png" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 4rth work -->
-         <br>
-        <div class="container">
-            <div class="row">
-                <h4 class="text-center">Spatio-Temporal Change in Poyang Lake Area, China</h4>
-                <!-- aoi -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <img src="maps\dms aoi.png" class="card-img-top" alt="Map Example">
-                        <div class="card-body">
-                            <h5 class="card-title">Study area map</h5>
-                            <p class="card-text">Map created on QGIS</p>
-                            <a href="maps\dms aoi.png" class="btn btn-primary" target="_blank">View Map</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- area -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <img src="maps\Poyangarea map.jpg" class="card-img-top" alt="Map Example" oncontextmenu="return false;">
-                        <div class="card-body">
-                            <h5 class="card-title">Poyang Lake Area analysis</h5>
-                            <p class="card-text">Spatio-Temporal change in Lake</p>
-                            <a href="maps\Poyangarea map.jpg" class="btn btn-primary" target="_blank" oncontextmenu="return false;">View Map</a>
-                        </div>
-                    </div>
-                </div>
-            
             </div>
         </div>
     </section>
 
-        <!-- Footer -->
-        <footer class="bg-dark text-white text-center py-3">
-            <p style="color: antiquewhite;">&copy; 2024 GIS with Raja Usama</p>
-        </footer>
+    <!-- Project 2: Climate Change Impact on Drought Patterns -->
+    <section class="project-section" id="drought-patterns">
+        <div class="container">
+            <div class="project-header" data-aos="fade-up">
+                <h2 class="section-title">Climate Change Impact on Drought Patterns</h2>
+                <p class="lead">Analysis across Agro-Ecological Zones of Pakistan</p>
+            </div>
+            <div class="row">
+                <!-- Precipitation Change -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/preci.png" class="card-img-top" alt="Precipitation change analysis">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Precipitation Change Analysis</h5>
+                            <p class="card-text">Data sourced from Google Earth Engine ERA5 showing precipitation patterns and changes over time.</p>
+                            <a href="maps/preci.png" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- PCI -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/pci.jpg" class="card-img-top" alt="Precipitation Condition Index">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Precipitation Condition Index</h5>
+                            <p class="card-text">Drought trend analysis based on precipitation variables across different regions.</p>
+                            <a href="maps/pci.jpg" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- SPI -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/Peidmount Plain Spi.png" class="card-img-top" alt="Standardized Precipitation Index">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Standardized Precipitation Index</h5>
+                            <p class="card-text">Comprehensive drought assessment using the most reliable precipitation index methodology.</p>
+                            <a href="maps/Peidmount Plain Spi.png" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project 3: Vegetation Growth Monitoring -->
+    <section class="project-section" id="vegetation-monitoring">
+        <div class="container">
+            <div class="project-header" data-aos="fade-up">
+                <h2 class="section-title">Vegetation Growth Monitoring</h2>
+                <p class="lead">Dera Ghazi Khan Arid Region, Pakistan</p>
+            </div>
+            <div class="row">
+                <!-- Satellite Image -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/sat.png" class="card-img-top" alt="False color composite view">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">False Color Composite View</h5>
+                            <p class="card-text">Sentinel-2 satellite imagery processed to highlight vegetation health and distribution.</p>
+                            <a href="maps/sat.png" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Vegetation Area -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/area map.png" class="card-img-top" alt="Vegetation threshold masking">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Vegetation Threshold Masking</h5>
+                            <p class="card-text">Advanced classification techniques for precise vegetation area calculation and monitoring.</p>
+                            <a href="maps/area map.png" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Study Area -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/roi.png" class="card-img-top" alt="Study area map">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Study Area Map</h5>
+                            <p class="card-text">Comprehensive overview of four distinct research areas within the Dera Ghazi Khan region.</p>
+                            <a href="maps/roi.png" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project 4: Spatio-Temporal Change Analysis -->
+    <section class="project-section" id="poyang-lake">
+        <div class="container">
+            <div class="project-header" data-aos="fade-up">
+                <h2 class="section-title">Spatio-Temporal Change Analysis</h2>
+                <p class="lead">Poyang Lake Area, China - Water Body Dynamics</p>
+            </div>
+            <div class="row">
+                <!-- Study Area -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/dms aoi.png" class="card-img-top" alt="Study area map of Poyang Lake">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Study Area Map</h5>
+                            <p class="card-text">Detailed cartographic representation of Poyang Lake region created using QGIS.</p>
+                            <a href="maps/dms aoi.png" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Area Analysis -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="map-card">
+                        <div class="card-img-container">
+                            <img src="maps/Poyangarea map.jpg" class="card-img-top" alt="Poyang Lake area analysis">
+                            <div class="card-overlay">
+                                <button class="view-btn">View Full Map</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Poyang Lake Area Analysis</h5>
+                            <p class="card-text">Comprehensive spatio-temporal analysis of changes in Poyang Lake's surface area over time.</p>
+                            <a href="maps/Poyangarea map.jpg" class="btn btn-primary" target="_blank">View Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 GIS with Raja Usama. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Show/hide back to top button
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Section scroll effects
+            handleSectionScroll();
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Progress bar function
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+        
+        // Section scroll animation
+        function handleSectionScroll() {
+            const sections = document.querySelectorAll('.project-section');
+            const cards = document.querySelectorAll('.map-card');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.85) {
+                    section.classList.add('in-view');
+                }
+            });
+            
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (cardTop < windowHeight * 0.85) {
+                    card.classList.add('visible');
+                }
+            });
+        }
+        
+        // Initialize section visibility on load
+        document.addEventListener('DOMContentLoaded', function() {
+            handleSectionScroll();
+            
+            // Add click handlers for overlay buttons
+            document.querySelectorAll('.view-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.map-card');
+                    const link = card.querySelector('.btn-primary');
+                    if (link) {
+                        window.open(link.href, '_blank');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
